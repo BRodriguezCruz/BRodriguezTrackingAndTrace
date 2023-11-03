@@ -1,0 +1,46 @@
+﻿@model BL.Usuario
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>USUARIOS REGISTRADOS</h1>
+<br />
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>EDITAR</th>
+                <th>ID USUARIO</th>
+                <th>NOMBRE</th>
+                <th>APELIIDO PATERNO</th>
+                <th>APELIIDO MATERNO</th>
+                <th>EMAIL</th>
+                <th>USERNAME</th>
+                <th>ID ROL</th>
+                <th>ROL</th>
+                <th>ELIMINAR</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (BL.Usuario registro in Model.Usuarios)
+            {
+                <tr>
+                    <td> <a href="@Url.Action("Form","Usuario", new {idUsuario = registro.IdUsuario})" class="btn btn-warning">EDITAR</a> </td>
+                    <td>@registro.IdUsuario</td>
+                    <td>@registro.Nombre</td>
+                    <td>@registro.ApellidoPaterno</td>
+                    <td>@registro.ApellidoMaterno</td>
+                    <td>@registro.Email</td>
+                    <td>@registro.UserName</td>
+                    <td>@registro.Rol.IdRol</td>
+                    <td>@registro.Rol.Tipo</td>
+                    <td> <a href="@Url.Action("","", new {})" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el registro?')">ELIMINAR</a> </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<a class="btn btn-outline-success" href="@Url.Action("Form","Usuario")">AGREGAR NUEVO USUARIO</a>

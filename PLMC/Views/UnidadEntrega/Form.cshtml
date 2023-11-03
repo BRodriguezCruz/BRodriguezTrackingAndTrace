@@ -1,0 +1,40 @@
+﻿@model BL.UnidadEntrega
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">RELLENA LOS CAMPOS</h1>
+
+@using (Html.BeginForm("Form","UnidadEntrega", FormMethod.Post, new { enctype = "multipart/form-data"}))
+{
+    @Html.HiddenFor(model => model.IdUnidadEntrega)
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.NumeroPlaca)
+            @Html.TextBoxFor(model => model.NumeroPlaca, new {@class = "form-control", @required = "required"})
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Modelo)
+            @Html.TextBoxFor(model => model.Modelo, new {@class = "form-control", @required = "required"})
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Marca)
+            @Html.TextBoxFor(model => model.Marca, new {@class = "form-control", @required = "required"})
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.AñoFabricacion)
+            @Html.TextBoxFor(model => model.AñoFabricacion, new {@class = "form-control", @required = "required", @type = "date"})
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.EstatusUnidad.IdEstatusUnidad)
+            @Html.TextBoxFor(model => model.EstatusUnidad.IdEstatusUnidad, new {@class = "form-control", @required = "required"})
+        </div>
+    </div>
+
+    <button class="btn btn-outline-success" type="submit">CONFIRMAR</button>
+}
+
+<a class="btn btn-outline-warning" href="@Url.Action("GetAll","unidadEntrega")">VOLVER</a>

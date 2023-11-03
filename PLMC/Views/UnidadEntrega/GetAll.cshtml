@@ -1,0 +1,45 @@
+﻿@model BL.UnidadEntrega
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Lista General de Unidades de Entrega</h1>
+<br />
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>EDITAR</th>
+                <th>ID UNIDAD DE ENTREGA</th>
+                <th>PLACA</th>
+                <th>MODELO</th>
+                <th>MARCA</th>
+                <th>AÑO FABRICACION</th>
+                <th>ID ESTATUS UNIDAD</th>
+                <th>ESTATUS DE LA UNIDAD</th>
+                <th>ELIMINAR</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (BL.UnidadEntrega registro in Model.ListUnidadEntrega)
+            {
+                <tr>
+                    <td> <a href="@Url.Action("Form","unidadEntrega", new {idUnidadEntrega = registro.IdUnidadEntrega})" class="btn btn-warning">EDITAR</a> </td>
+                    <td>@registro.IdUnidadEntrega</td>
+                    <td>@registro.NumeroPlaca</td>
+                    <td>@registro.Modelo</td>
+                    <td>@registro.Marca</td>
+                    <td>@registro.AñoFabricacion</td>
+                    <td>@registro.EstatusUnidad.IdEstatusUnidad</td>
+                    <td>@registro.EstatusUnidad.Estatus</td>
+                    <td> <a href="@Url.Action("Form","unidadEntrega", new {idUnidadEntrega = registro.IdUnidadEntrega})" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el registro?')">ELIMINAR</a> </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<a class="btn btn-outline-success" href="@Url.Action("Form","UnidadEntrega")">AGREGAR NUEVA UNIDAD</a>
+

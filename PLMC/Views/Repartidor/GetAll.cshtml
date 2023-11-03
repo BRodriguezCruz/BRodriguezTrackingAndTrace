@@ -1,0 +1,54 @@
+﻿@model BL.Repartidor
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">LISTA GENERAL DE REPARTIDORES</h1>
+<br />
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>EDITAR</th>
+                <th>ID REPARTIDOR</th>
+                <th>FOTOGRAFIA</th>
+                <th>NOMBRE</th>
+                <th>APELIIDO PATERNO</th>
+                <th>APELIIDO MATERNO</th>
+                <th>TELEFONO</th>
+                <th>FECHA INGRESO</th>
+                <th>UNIDAD ASIGNADAL</th>
+                <th>ELIMINAR</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (BL.Repartidor registro in Model.Repartidores)
+            {
+                <tr>
+                    <td> <a href="@Url.Action("Form","Repartidor", new {idRepartidor = registro.IdRepartidor})" class="btn btn-warning">EDITAR</a> </td>
+                    <td>@registro.IdRepartidor</td>
+                    @if (registro.Fotografia == null || registro.Fotografia == "")
+                    {
+                    <td>  <img id="picture" src="https://cdn-icons-png.flaticon.com/512/1053/1053244.png" width="100" height="100" class="rounded-circle" /></td>
+                    }
+                    else
+                    {
+                    <td>  <img id="picture" src="data:image/*;base64,@Model.Fotografia" width="70" height="70" class="rounded-circle" /> </td>
+                    }
+                    <td>@registro.Nombre</td>
+                    <td>@registro.ApellidoPaterno</td>
+                    <td>@registro.ApellidoMaterno</td>
+                    <td>@registro.Telefono</td>
+                    <td>@registro.FechaIngreso</td>
+                    <td>@registro.UnidadAsignada.IdUnidadEntrega</td>
+                    <td> <a href="@Url.Action("","", new {})" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el registro?')">ELIMINAR</a> </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<a class="btn btn-outline-success" href="@Url.Action("Form","Repartidor")">AGREGAR NUEVO REPARTIDOR</a>
+

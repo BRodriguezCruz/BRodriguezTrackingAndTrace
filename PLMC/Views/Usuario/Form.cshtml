@@ -1,0 +1,50 @@
+﻿@model BL.Usuario
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>INGRESA DATOS REQUERIDOS</h1>
+
+
+@using (Html.BeginForm("Form", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.HiddenFor(model => model.IdUsuario)
+    <div class="row">
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.Nombre,new {@class= "form-control", @required = "required", @placeholder = "NOMBRE"})
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.ApellidoPaterno,new {@class= "form-control", @required = "required", @placeholder = "Apellido Paterno"})
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.ApellidoMaterno,new {@class= "form-control", @placeholder = "Apellido Materno"})
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.UserName,new {@class= "form-control", @required = "required", @placeholder = "Nombre de usuario"})
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.Email,new {@class= "form-control", @required = "required", @placeholder = "Correo Electronico"})
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.Rol.IdRol, new SelectList(Model.Rol.Roles, "IdRol", "Tipo"), "SELECCIONA UN ROL", new {@class = "form-control"})
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.Password,new {@class= "form-control", @required = "required", @placeholder = "CONTRASEÑA", @id = "pass"})
+        </div>
+ 
+    </div>
+    <hr />
+    <button class="btn btn-success" type="submit">HECHO</button>
+}
+
+
+
