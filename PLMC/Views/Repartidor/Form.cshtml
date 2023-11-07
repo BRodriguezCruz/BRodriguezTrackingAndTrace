@@ -26,10 +26,11 @@
             @Html.TextBoxFor(model => model.Telefono,new {@class= "form-control", @required = "required", @placeholder = "TELEFONO"})
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.FechaIngreso,new {@class= "form-control", @required = "required", @placeholder = "FECHA DE INGRESO", @type = "date"})
+            @Html.TextBoxFor(model => model.FechaIngreso,"{0:yyyy-MM-dd}",new {@class= "form-control", @required = "required", @placeholder = "FECHA DE INGRESO", @type = "date"})
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.UnidadAsignada.IdUnidadEntrega,new {@class= "form-control", @placeholder = "ID DE LA UNIDAD DE ENTREGA ASIGNADA"})
+            @*@Html.TextBoxFor(model => model.UnidadAsignada.IdUnidadEntrega,new {@class= "form-control", @placeholder = "ID DE LA UNIDAD DE ENTREGA ASIGNADA"})*@
+            @Html.DropDownListFor(model => model.UnidadAsignada.ListUnidadEntrega, new SelectList(Model.UnidadAsignada.ListUnidadEntrega , "IdUnidadEntrega"), "SELECCIONA UNA UNIDAD", new{ @class = "form-control"})
         </div>
     </div>
     <br />

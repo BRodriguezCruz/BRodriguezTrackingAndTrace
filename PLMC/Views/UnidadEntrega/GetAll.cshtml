@@ -35,7 +35,7 @@
                     <td>@registro.AñoFabricacion</td>
                     <td>@registro.EstatusUnidad.IdEstatusUnidad</td>
                     <td>@registro.EstatusUnidad.Estatus</td>
-                    <td> <a href="@Url.Action("Form","unidadEntrega", new {idUnidadEntrega = registro.IdUnidadEntrega})" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el registro?')">ELIMINAR</a> </td>
+                    <td> <a href="@Url.Action("Delete","unidadEntrega", new {idUnidadEntrega = registro.IdUnidadEntrega})" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el registro?')">ELIMINAR</a> </td>
                 </tr>
             }
         </tbody>

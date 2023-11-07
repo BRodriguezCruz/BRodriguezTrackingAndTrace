@@ -68,6 +68,8 @@ namespace PLMC.Controllers
         public IActionResult Form(int? idUnidadEntrega)
         {
             BL.UnidadEntrega unidadEntrega = new BL.UnidadEntrega();
+            BL.EstatusUnidad estatusUnidad = BL.EstatusUnidad.GetAll();
+            unidadEntrega.EstatusUnidad = new BL.EstatusUnidad();
 
             if (idUnidadEntrega != null)
             {
@@ -90,10 +92,12 @@ namespace PLMC.Controllers
                     }
                 }
                 //DDL ESTATUS 
+                unidadEntrega.EstatusUnidad.ListaEstatusUnidad = estatusUnidad.ListaEstatusUnidad;
             }
             else
             {
                 //ddl para estatus entrega
+                unidadEntrega.EstatusUnidad.ListaEstatusUnidad = estatusUnidad.ListaEstatusUnidad;
             }
             return View(unidadEntrega);
         }
@@ -202,7 +206,6 @@ namespace PLMC.Controllers
         }
         */
 
-        [HttpDelete]
         public IActionResult Delete(int idUnidadEntrega)
         {
             using (HttpClient client = new HttpClient())
@@ -220,7 +223,7 @@ namespace PLMC.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "ERROR, UNIDAD NO ELIMINADA";
+                    ViewBag.Message = "ERROR, UNIDAD NO ELIMINADA YA QUE SU ESTATUS SIGUE DADO DE ALTA, PRIMERO ELIMINALO";
                 }
             }
             return PartialView("Modal");

@@ -5,6 +5,8 @@
 }
 
 <h1 class="text-center">RELLENA LOS CAMPOS</h1>
+<br />
+<hr />
 
 @using (Html.BeginForm("Form","UnidadEntrega", FormMethod.Post, new { enctype = "multipart/form-data"}))
 {
@@ -23,18 +25,22 @@
             @Html.TextBoxFor(model => model.Marca, new {@class = "form-control", @required = "required"})
         </div>
     </div>
+    <br />
     <div class="row">
         <div class="col-md-4">
             @Html.LabelFor(model => model.AñoFabricacion)
             @Html.TextBoxFor(model => model.AñoFabricacion, new {@class = "form-control", @required = "required", @type = "date"})
         </div>
         <div class="col-md-4">
+            @* @Html.LabelFor(model => model.EstatusUnidad.IdEstatusUnidad)
+            @Html.TextBoxFor(model => model.EstatusUnidad.IdEstatusUnidad, new {@class = "form-control", @required = "required"})*@
             @Html.LabelFor(model => model.EstatusUnidad.IdEstatusUnidad)
-            @Html.TextBoxFor(model => model.EstatusUnidad.IdEstatusUnidad, new {@class = "form-control", @required = "required"})
+            @Html.DropDownListFor(model => model.EstatusUnidad.IdEstatusUnidad, new SelectList(Model.EstatusUnidad.ListaEstatusUnidad, "IdEstatusUnidad", "Estatus"), "SELECCIONA UN ESTATUS", new { @class= "form-control"})
         </div>
     </div>
-
+    <br />
     <button class="btn btn-outline-success" type="submit">CONFIRMAR</button>
+    <a class="btn btn-outline-warning" href="@Url.Action("GetAll","unidadEntrega")">VOLVER</a>
 }
 
-<a class="btn btn-outline-warning" href="@Url.Action("GetAll","unidadEntrega")">VOLVER</a>
+

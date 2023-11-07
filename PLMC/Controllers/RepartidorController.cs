@@ -73,16 +73,34 @@ namespace PLMC.Controllers
         public IActionResult Form(int? idRepartidor)
         {
             BL.Repartidor repartidor = new BL.Repartidor();
+            repartidor.UnidadAsignada = new BL.UnidadEntrega();
 
             if (idRepartidor != null)
             {
                 using (HttpClient cliente = new HttpClient())
                 {
                     cliente.BaseAddress = new Uri("http://localhost:5063/api/");
+
+                    var respuestaUnidadAsiganda = cliente.GetAsync("unidadEntrega");
+                    respuestaUnidadAsiganda.Wait();
+                    var resultadoServicioUnidadAsiganda = respuestaUnidadAsiganda.Result;
+
                     var respuesta = cliente.GetAsync("repartidor/" + idRepartidor);
                     respuesta.Wait();
-
                     var resultadoServicio = respuesta.Result;
+
+                    if (resultadoServicioUnidadAsiganda.IsSuccessStatusCode)
+                    {
+                        var leerTareaUnidad = resultadoServicioUnidadAsiganda.Content.ReadAsAsync<BL.UnidadEntrega>();
+                        leerTareaUnidad.Wait();
+
+                        foreach (var resultUnidadesEngtrega in leerTareaUnidad.Result.ListUnidadEntrega)
+                        {
+                            BL.UnidadEntrega resultItemsList = Newtonsoft.Json.JsonConvert.DeserializeObject<BL.UnidadEntrega>(resultUnidadesEngtrega.ToString());
+                            repartidor.UnidadAsignada.ListUnidadEntrega.Add(resultItemsList);
+                        }
+                    }
+
 
                     if (resultadoServicio.IsSuccessStatusCode)
                     {
@@ -96,13 +114,30 @@ namespace PLMC.Controllers
                         repartidor = resultItem;
                     }
                 }
-                //DDL UNIDADES
             }
             else
             {
-                //DDL DE UNIDADES
-            }
+                using (HttpClient cliente = new HttpClient())
+                {
+                    cliente.BaseAddress = new Uri("http://localhost:5063/api/");
+                    var respuestaUnidadAsiganda = cliente.GetAsync("unidadEntrega");
+                    respuestaUnidadAsiganda.Wait();
 
+                    var resultadoServicioUnidadAsiganda = respuestaUnidadAsiganda.Result;
+
+                    if (resultadoServicioUnidadAsiganda.IsSuccessStatusCode)
+                    {
+                        var leerTareaUnidad = resultadoServicioUnidadAsiganda.Content.ReadAsAsync<BL.UnidadEntrega>();
+                        leerTareaUnidad.Wait();
+
+                        foreach (var resultUnidadesEngtrega in leerTareaUnidad.Result.ListUnidadEntrega)
+                        {
+                            BL.UnidadEntrega resultItemsList = Newtonsoft.Json.JsonConvert.DeserializeObject<BL.UnidadEntrega>(resultUnidadesEngtrega.ToString());
+                            repartidor.UnidadAsignada.ListUnidadEntrega.Add(resultItemsList);
+                        }
+                    }
+                }
+            }
             return View(repartidor);
         }
 
@@ -224,7 +259,7 @@ namespace PLMC.Controllers
         }*/
 
 
-        [HttpDelete]
+        
         public IActionResult Delete(int idRepartidor)
         {
             using (HttpClient cliente = new HttpClient())
@@ -241,7 +276,7 @@ namespace PLMC.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "ERROR, NO SE ELIMINO AL REPARTIDOR";
+                    ViewBag.Message = "ERROR, NO SE ELIMINO AL REPARTIDOR DEBIDO A QUE TIENE UNIDADES ASIGNADAS, ELIMINE PRIMERO LA UNIDAD";
                 }
             }
                 return PartialView("Modal");

@@ -44,7 +44,7 @@
                     <td>@registro.Telefono</td>
                     <td>@registro.FechaIngreso</td>
                     <td>@registro.UnidadAsignada.IdUnidadEntrega</td>
-                    <td> <a href="@Url.Action("","", new {})" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el registro?')">ELIMINAR</a> </td>
+                    <td> <a href="@Url.Action("Delete","Repartidor", new {idRepartidor = registro.IdRepartidor})" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el registro?')">ELIMINAR</a> </td>
                 </tr>
             }
         </tbody>
